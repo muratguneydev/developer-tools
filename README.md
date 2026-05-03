@@ -79,6 +79,8 @@ Instruction modules consumed by an implementation agent as part of its workflow 
 
 | Skill | Purpose |
 |-------|---------|
+| `tracer-bullet-planning` | Create a vertical slice plan from grill-me output and feature scope, optimized for fast validation and minimal end-to-end delivery |
+| `kanban-organizer` | Convert vertical slice tasks into a markdown kanban board with phases, dependencies, and a Mermaid graph |
 | `implement-tdd-feature` | Full TDD cycle for a feature: failing unit tests → failing E2E tests → minimum implementation → refactor → commit+push |
 | `scaffold-unit-test` | Produces a single, checklist-verified NUnit + AutoFixture + Shouldly test method; used as a sub-step inside `implement-tdd-feature` |
 
