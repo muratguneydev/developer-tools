@@ -73,6 +73,17 @@ User-invocable prompt files selectable in Copilot Chat (`@workspace /prompt <nam
 |--------|---------|
 | `grill-me` | Relentless design interview — stress-tests a plan by walking down every branch of the decision tree |
 
+### Agents (`ai-governance/agents/`)
+
+Specialized agent workflows that can be invoked for specific development tasks.
+
+| Agent | Purpose |
+|-------|---------|
+| `orchestrator` | Master agent that orchestrates implementation of a complete kanban board: creates development PR, manages task scheduling, runs implementation + code-review cycles, gates on human approval, and handles feedback loops (automated reviewer + human) until all tasks are approved |
+| `slice-implementer` | Implements code for a single vertical slice task using the TDD workflow; called by the orchestrator; can be called multiple times to resolve automated and human review feedback |
+| `pr-manager` | Manages GitHub PR operations using `gh` CLI: creates PRs, reads comments, updates descriptions, and tracks PR lifecycle |
+| `code-reviewer` | Reviews C# code for clean code, SOLID, composition, TDD conventions, and workspace instruction compliance without modifying files |
+
 ### Agent skills (`skills/`)
 
 Instruction modules consumed by an implementation agent as part of its workflow — not invoked directly by the user.
