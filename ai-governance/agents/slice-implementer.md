@@ -38,6 +38,26 @@ implementation approach.
 - Re-run affected tests to ensure all remain green.
 - Commit changes with a message referencing the feedback addressed.
 
+## UI implementation: Playwright feedback loop
+
+When a task involves creating or modifying UI (pages, components, forms, views, screens, or any
+user-facing behaviour), use Playwright test results as the primary feedback mechanism — not
+assumptions about whether the implementation looks correct.
+
+1. **Detect the test directory** — look for `e2e/package.json`, `playwright/package.json`, or
+   similar in the project root.
+2. **Run tests before starting** to capture a baseline (know which tests already pass or fail).
+3. **Write new Playwright tests first** if none cover the feature (red phase). Use the templates
+   at `developer-tools/utilities/playwright/` if the project has no Playwright setup yet.
+4. **Implement the UI** to satisfy the task requirements.
+5. **Run tests** using the `run-playwright-tests` skill — check `playwright-results/results.json`
+   for failures.
+6. **Interpret failures** from `results[].error.message` and screenshot attachments. Fix the UI.
+7. **Iterate** (steps 4–6) until `stats.unexpected === 0` and no previously-passing tests regress.
+8. **Commit** with the green test run confirming the UI works.
+
+Do not mark a UI task complete without a passing Playwright run.
+
 ## Responsibilities
 
 - Keep the build green at all times.

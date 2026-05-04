@@ -1,0 +1,17 @@
+# Playwright Docker Compose — copy to your e2e/ directory and customise as needed.
+# Usage: docker compose run --rm playwright
+# Or use the shared run-tests.ps1 script for automated runs with result collection.
+services:
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.52.0-jammy
+    working_dir: /work
+    volumes:
+      - .:/work
+    environment:
+      BASE_URL: ${BASE_URL:-http://host.docker.internal:5000}
+      CI: "true"
+    command: >
+      bash -c "
+        if [ -f package-lock.json ]; then npm ci; else npm install; fi &&
+        npx playwright test
+      "

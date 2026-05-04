@@ -1,0 +1,60 @@
+{
+  "_comment": "Paste the 'tasks' array entries and 'inputs' array entries into your project's .vscode/tasks.json. Requires developer-tools to be included in the multi-root workspace.",
+  "tasks": [
+    {
+      "label": "Playwright: Run All Tests (Docker)",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder:developer-tools}/utilities/playwright/run-tests.ps1",
+        "-ProjectRoot", "${workspaceFolder}",
+        "-BaseUrl", "${input:baseUrl}"
+      ],
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "new", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Playwright: Run Filtered Tests (Docker)",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder:developer-tools}/utilities/playwright/run-tests.ps1",
+        "-ProjectRoot", "${workspaceFolder}",
+        "-BaseUrl", "${input:baseUrl}",
+        "-Filter", "${input:testFilter}"
+      ],
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "new", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Playwright: Show HTML Report",
+      "type": "shell",
+      "command": "npx",
+      "args": [
+        "playwright", "show-report",
+        "${workspaceFolder}/playwright-results/html"
+      ],
+      "options": { "cwd": "${workspaceFolder}/e2e" },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "baseUrl",
+      "description": "Base URL of the running application",
+      "type": "promptString",
+      "default": "http://localhost:5000"
+    },
+    {
+      "id": "testFilter",
+      "description": "Test name grep pattern (empty for all tests)",
+      "type": "promptString",
+      "default": ""
+    }
+  ]
+}

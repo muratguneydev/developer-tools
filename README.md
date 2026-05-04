@@ -37,6 +37,12 @@ ai-governance/
   agents/                          # agent configuration files
   policies/                        # AI usage policies
 utilities/
+  playwright/
+    run-tests.ps1                  # run Playwright tests via Docker from any project root
+    docker-compose.yml             # reference compose file — copy to your e2e/ directory
+    playwright.config.template.ts  # Playwright config template for projects
+    package.template.json          # package.json template for the e2e directory
+    tasks.snippet.json             # VS Code task snippets to paste into a project's tasks.json
   vscode/
     extensions.md                  # recommended VS Code extensions
     snippets/                      # shared VS Code snippet files
@@ -94,6 +100,40 @@ Instruction modules consumed by an implementation agent as part of its workflow 
 | `kanban-organizer` | Convert vertical slice tasks into a markdown kanban board with phases, dependencies, and a Mermaid graph |
 | `implement-tdd-feature` | Full TDD cycle for a feature: failing unit tests → failing E2E tests → minimum implementation → refactor → commit+push |
 | `scaffold-unit-test` | Produces a single, checklist-verified NUnit + AutoFixture + Shouldly test method; used as a sub-step inside `implement-tdd-feature` |
+| `run-playwright-tests` | Runs the project's Playwright test suite via Docker and uses results as a feedback loop during UI implementation: invocation, result parsing, failure interpretation, and red-green iteration |
+
+### Playwright testing (`utilities/playwright/`)
+
+Shared infrastructure for running Playwright UI tests inside Docker so browsers never need to be
+installed locally. Works for manual runs from VS Code and for automated agent feedback loops.
+
+**Quick start for a project:**
+
+1. Copy `utilities/playwright/playwright.config.template.ts` → `e2e/playwright.config.ts`
+2. Copy `utilities/playwright/package.template.json` → `e2e/package.json` (then `npm install`)
+3. Write tests in `e2e/tests/`
+4. Add the entries from `utilities/playwright/tasks.snippet.json` to your project's `.vscode/tasks.json`
+5. Run **Playwright: Run All Tests (Docker)** from the VS Code task runner
+
+**Manual run from the terminal:**
+
+```powershell
+& "C:\Code\developer-tools\utilities\playwright\run-tests.ps1" `
+    -ProjectRoot "C:\Code\my-project" `
+    -BaseUrl "http://localhost:5000"
+```
+
+The script translates `localhost` to `host.docker.internal` automatically, starts the official
+Playwright Docker image, mounts the project, runs `npm ci && npx playwright test`, and writes
+results to `playwright-results/results.json` and an HTML report to `playwright-results/html/`.
+
+**VS Code tasks** (`Playwright: Run All Tests (Docker)`, `Playwright: Run Filtered Tests (Docker)`)
+are defined in `.vscode/tasks.json` and prompt for project path and base URL — usable from the
+developer-tools workspace without any per-project setup.
+
+**Agent feedback loop:** the `run-playwright-tests` skill tells agents how to wire Playwright into
+the UI implementation cycle. The `slice-implementer` agent uses it automatically when a task
+involves UI: run baseline → write failing tests → implement → run again → fix → repeat until green.
 
 ### MCP servers (`.vscode/mcp.json`)
 

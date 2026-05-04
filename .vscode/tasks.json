@@ -1,4 +1,54 @@
 {
     "version": "2.0.0",
-    "tasks": []
+    "tasks": [
+        {
+            "label": "Playwright: Run All Tests (Docker)",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy", "Bypass",
+                "-File", "${workspaceFolder}/utilities/playwright/run-tests.ps1",
+                "-ProjectRoot", "${input:projectRoot}",
+                "-BaseUrl", "${input:baseUrl}"
+            ],
+            "group": "test",
+            "presentation": { "reveal": "always", "panel": "new", "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Playwright: Run Filtered Tests (Docker)",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy", "Bypass",
+                "-File", "${workspaceFolder}/utilities/playwright/run-tests.ps1",
+                "-ProjectRoot", "${input:projectRoot}",
+                "-BaseUrl", "${input:baseUrl}",
+                "-Filter", "${input:testFilter}"
+            ],
+            "group": "test",
+            "presentation": { "reveal": "always", "panel": "new", "clear": true },
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "projectRoot",
+            "description": "Absolute path to the project root containing Playwright tests",
+            "type": "promptString",
+            "default": "C:/Code/my-project"
+        },
+        {
+            "id": "baseUrl",
+            "description": "Base URL of the running application",
+            "type": "promptString",
+            "default": "http://localhost:5000"
+        },
+        {
+            "id": "testFilter",
+            "description": "Test name grep pattern (leave empty for all tests)",
+            "type": "promptString",
+            "default": ""
+        }
+    ]
 }
