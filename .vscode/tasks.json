@@ -29,6 +29,34 @@
             "group": "test",
             "presentation": { "reveal": "always", "panel": "new", "clear": true },
             "problemMatcher": []
+        },
+        {
+            "label": "NUnit: Tests in Current File",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy", "Bypass",
+                "-File", "${workspaceFolder}/utilities/nunit/Invoke-NUnitTests.ps1",
+                "-Mode", "CurrentFile",
+                "-FilePath", "${file}"
+            ],
+            "group": "test",
+            "presentation": { "reveal": "always", "focus": true, "panel": "dedicated", "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "NUnit: Tests in Repository",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy", "Bypass",
+                "-File", "${workspaceFolder}/utilities/nunit/Invoke-NUnitTests.ps1",
+                "-Mode", "Repository",
+                "-FilePath", "${file}"
+            ],
+            "group": "test",
+            "presentation": { "reveal": "always", "focus": true, "panel": "dedicated", "clear": true },
+            "problemMatcher": []
         }
     ],
     "inputs": [
