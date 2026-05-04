@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(Get-ChildItem -Path \"c:\\\\Code\\\\developer-tools\" -Recurse -Force | Select-Object FullName | Sort-Object FullName | ForEach-Object { $_.FullName })"
+      "PowerShell(Get-ChildItem -Path \"c:\\\\Code\\\\developer-tools\" -Recurse -Force | Select-Object FullName | Sort-Object FullName | ForEach-Object { $_.FullName })",
+      "Bash(Remove-Item \"c:\\\\Code\\\\developer-tools\\\\.github\\\\prompts\\\\grill-me.prompt.md\")"
     ]
   }
 }

@@ -31,7 +31,7 @@ skills/
   implement-tdd-feature.md         # agent skill: full TDD cycle for a feature
   scaffold-unit-test.md            # agent skill: produce a single NUnit test method
 .vscode/
-  mcp.json                         # MCP tool server configurations for Copilot agent mode
+  mcp.json                         # MCP tool server configurations for Copilot agent mode (context7)
   tasks.json                       # shared VS Code tasks
 ai-governance/
   agents/                          # agent configuration files
@@ -138,3 +138,17 @@ involves UI: run baseline → write failing tests → implement → run again �
 ### MCP servers (`.vscode/mcp.json`)
 
 Registers tool servers for Copilot agent mode. Add server entries here and they become available across all workspaces that include this repo.
+
+| Server | Purpose |
+|--------|---------|
+| `context7` | Fetches up-to-date library documentation on demand — use `use context7` in any Copilot/agent prompt to pull accurate docs for ASP.NET Core, EF Core, NuGet packages, and any other library instead of relying on potentially stale training data |
+
+**Prerequisites:** Node.js must be installed (the server runs via `npx` and is downloaded automatically on first use — no manual install needed).
+
+**Usage in prompts:** append `use context7` to any agent or Copilot Chat prompt, e.g.:
+
+```
+How do I configure minimal APIs in ASP.NET Core 9? use context7
+```
+
+The server resolves the library from the prompt, fetches the current docs, and injects them into the model context before answering.
