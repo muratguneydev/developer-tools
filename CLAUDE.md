@@ -5,12 +5,12 @@ The files below are the single source of truth — do not duplicate their conten
 
 ## General coding principles
 
-@.github/copilot-instructions.md
+@ai-governance/.github/copilot-instructions.md
 
 ## C# conventions (applies to **/*.cs)
 
-@.github/instructions/csharp.instructions.md
+@ai-governance/.github/instructions/csharp.instructions.md
 
 ## Testing conventions (applies to tests/**/*.cs)
 
-@.github/instructions/testing.instructions.md
+@ai-governance/.github/instructions/testing.instructions.md
